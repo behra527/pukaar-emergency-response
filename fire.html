@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>اگ بجھاؤ - پُکار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>اگ بجھاؤ سروس</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">�</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">Fire Emergency</span>
+                        <span class="pukaar-subtitle">آگ بجھاؤ سسٹم</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-btn">ڈیش بورڈ</a>
+                <a href="emergency.html" class="nav-btn">ایمرجنسی</a>
+                <a href="medical.html" class="nav-btn">میڈیکل</a>
+                <a href="fire.html" class="nav-btn active">اگ</a>
+                <a href="accident.html" class="nav-btn">حادثہ</a>
+                <a href="police.html" class="nav-btn">پولیس</a>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <a href="settings.html" class="nav-btn">سیٹنگز</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <a href="tel:1122" class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Fire Emergency Hero -->
+        <section class="emergency-hero fire-hero">
+            <div class="hero-content">
+                <div class="hero-icon">🔥</div>
+                <h2>فائر ایمرجنسی</h2>
+                <p>پاکستان بھر میں 24/7 فائر فائٹنگ سروسز</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">89</span>
+                        <span class="stat-label">فعال فائر اسٹیشنز</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">4.2</span>
+                        <span class="stat-label">منٹ اوسط رسپانز</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">12</span>
+                        <span class="stat-label">موجودہ فائرز</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Fire Actions -->
+        <section class="quick-actions-panel">
+            <h2>فوری فائر ایکشنز</h2>
+            <div class="action-grid">
+                <button class="action-btn fire" onclick="reportFire()">
+                    <div class="action-icon">🔥</div>
+                    <h3>اگ کی اطلاع دیں</h3>
+                    <p>فوری اگ کی اطلاع دیں</p>
+                </button>
+                <button class="action-btn fire" onclick="fireSafety()">
+                    <div class="action-icon">🧯</div>
+                    <h3>اگ سے بچاؤ</h3>
+                    <p>اگ سے بچاؤ کے طریقے</p>
+                </button>
+                <button class="action-btn fire" onclick="findHydrant()">
+                    <div class="action-icon">💧</div>
+                    <h3>ہائیڈریٹ تلاش کریں</h3>
+                    <p>نزدیکی پانی کا ذریعہ</p>
+                </button>
+                <button class="action-btn fire" onclick="evacuationPlan()">
+                    <div class="action-icon">🏃</div>
+                    <h3>ایواکویشن پلان</h3>
+                    <p>محفوظ نکلنے کا راستہ</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Active Fire Emergencies -->
+        <section class="emergency-control-panel">
+            <div class="control-header">
+                <h2>فعال فائر ایمرجنسیز</h2>
+                <div class="system-status">
+                    <span class="status-badge warning">12 ایکٹو فائرز</span>
+                    <span class="response-time">اوسط رسپانز: 4.2 منٹ</span>
+                </div>
+            </div>
+
+            <div class="emergencies-grid">
+                <div class="emergency-card high-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon fire">🔥</span>
+                        <div class="emergency-info">
+                            <h4>صنعتی ایریا میں اگ</h4>
+                            <span class="emergency-id">FIR-2025-0089</span>
+                        </div>
+                        <span class="priority-badge high">ہائی</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">لاہور، صنعتی ایریا</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">14:20</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">3 فائر ٹیمیں موقع پر</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card medium-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon fire">🔥</span>
+                        <div class="emergency-info">
+                            <h4>گھریلو اگ</h4>
+                            <span class="emergency-id">FIR-2025-0088</span>
+                        </div>
+                        <span class="priority-badge medium">میڈیم</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">کراچی، ڈیفنس</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">13:45</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">1 فائر ٹیم موقع پر</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card low-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon fire">🔥</span>
+                        <div class="emergency-info">
+                            <h4>باغ میں اگ</h4>
+                            <span class="emergency-id">FIR-2025-0087</span>
+                        </div>
+                        <span class="priority-badge low">لو</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">اسلام آباد، F-6</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">13:30</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">کنٹرول میں</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fire Map -->
+        <section class="emergency-map-section">
+            <h3>فائر سروسز مپ</h3>
+            <div class="map-controls">
+                <button class="map-filter-btn active" data-filter="all">تمام</button>
+                <button class="map-filter-btn" data-filter="active">فعال فائرز</button>
+                <button class="map-filter-btn" data-filter="station">فائر اسٹیشن</button>
+                <button class="map-filter-btn" data-filter="hydrant">ہائیڈریٹ</button>
+            </div>
+            <div id="fireMap" class="emergency-map">
+                <!-- Map will be rendered here -->
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-icon fire">🔥</span>
+                    <span>فعال اگ</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon fire">🚒</span>
+                    <span>فائر اسٹیشن</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon fire">💧</span>
+                    <span>ہائیڈریٹ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Fire Safety Tips -->
+        <section class="resources-section">
+            <h2>اگ سے بچاؤ کے طریقے</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🧯</div>
+                    <h4>فائر ایکسٹنگیشر</h4>
+                    <p>گھر اور دفتر میں فائر ایکسٹنگیشر رکھیں</p>
+                    <div class="resource-status available">ضروری</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🚪</div>
+                    <h4>ایگزٹ پلان</h4>
+                    <p>ہر عمارت میں ایمرجنسی نکلنے کا راستہ</p>
+                    <div class="resource-status available">ضروری</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📞</div>
+                    <h4>ہیلپ لائن</h4>
+                    <p>فوری مدد کے لیے 1122 پر کال کریں</p>
+                    <div class="resource-status available">24/7</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🏃</div>
+                    <h4>ایواکویشن</h4>
+                    <p>محفوظ جگہ کی طرف فوری نکلیں</p>
+                    <div class="resource-status available">ہدایت</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>اگ بجھاؤ سروس</h4>
+                <p>پاکستان بھر میں فوری فائر فائٹنگ</p>
+                <div class="footer-stats">
+                    <span>🔥 آج کی فائر کالز: 12</span>
+                    <span>⚡ اوسط رسپانز ٹائم: 4.2 منٹ</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>ہیلپ لائنز</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">🚒</span>
+                        <div>
+                            <strong>فائر بریگیڈ</strong>
+                            <span>1122</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🧯</span>
+                        <div>
+                            <strong>فائر ہیلپ</strong>
+                            <span>0800-FIRE</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">💧</span>
+                        <div>
+                            <strong>وٹر سپلائی</strong>
+                            <span>0800-WATER</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>سسٹم انفارمیشن</h4>
+                <div class="system-info">
+                    <span>ورژن: v2.1.0</span>
+                    <span>لاسٹ اپڈیٹ: 2025-02-23</span>
+                    <span>سرور: 🟢 آن لائن</span>
+                    <span>89 فائر اسٹیشنز فعال</span>
+                </div>
+                <div class="copyright">
+                    <p>© 2025 پُکار - آل رائٹس ریزرو</p>
+                    <p>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="fire.js"></script>
+</body>
+</html>

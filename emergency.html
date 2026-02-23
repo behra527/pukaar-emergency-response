@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ایمرجنسی - پُکار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>ایمرجنسی سسٹم</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">🚨</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">Emergency Response</span>
+                        <span class="pukaar-subtitle">پاکستان ایمرجنسی ریسپانس</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-btn">ڈیش بورڈ</a>
+                <button class="nav-btn active" data-section="emergency">ایمرجنسی</button>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <a href="settings.html" class="nav-btn">سیٹنگز</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <button class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Emergency Control Panel -->
+        <section class="emergency-control-panel">
+            <div class="control-header">
+                <h2>ایمرجنسی کنٹرول پینل</h2>
+                <div class="system-status">
+                    <span class="status-badge active">سسٹم فعال</span>
+                    <span class="response-time">اوسط رسپانز: 2.3 منٹ</span>
+                </div>
+            </div>
+
+            <!-- Active Emergencies -->
+            <div class="active-emergencies">
+                <h3>فعال ایمرجنسیز</h3>
+                <div class="emergencies-grid">
+                    <div class="emergency-card high-priority">
+                        <div class="emergency-header">
+                            <span class="emergency-icon medical">🏥</span>
+                            <div class="emergency-info">
+                                <h4>میڈیکل ایمرجنسی</h4>
+                                <span class="emergency-id">EMG-2025-0142</span>
+                            </div>
+                            <span class="priority-badge high">ہائی</span>
+                        </div>
+                        <div class="emergency-details">
+                            <div class="detail-item">
+                                <span class="detail-label">لوکیشن:</span>
+                                <span class="detail-value">اسلام آباد، F-8 مارکیٹ</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">وقت:</span>
+                                <span class="detail-value">14:32</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">اسٹیٹس:</span>
+                                <span class="detail-value">2 ایمبولینس بھیج گئیں</span>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="action-btn primary">تفصیل دیکھیں</button>
+                                <button class="action-btn secondary">ایمرجنسی ختم کریں</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emergency-card medium-priority">
+                        <div class="emergency-header">
+                            <span class="emergency-icon fire">🔥</span>
+                            <div class="emergency-info">
+                                <h4>اگ بجھاؤ</h4>
+                                <span class="emergency-id">EMG-2025-0141</span>
+                            </div>
+                            <span class="priority-badge medium">میڈیم</span>
+                        </div>
+                        <div class="emergency-details">
+                            <div class="detail-item">
+                                <span class="detail-label">لوکیشن:</span>
+                                <span class="detail-value">لاہور، گارڈن ٹاؤن</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">وقت:</span>
+                                <span class="detail-value">13:45</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">اسٹیٹس:</span>
+                                <span class="detail-value">1 فائر بریگیڈ ٹیم</span>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="action-btn primary">تفصیل دیکھیں</button>
+                                <button class="action-btn secondary">ایمرجنسی ختم کریں</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="emergency-card low-priority">
+                        <div class="emergency-header">
+                            <span class="emergency-icon accident">🚗</span>
+                            <div class="emergency-info">
+                                <h4>حادثہ</h4>
+                                <span class="emergency-id">EMG-2025-0140</span>
+                            </div>
+                            <span class="priority-badge low">لو</span>
+                        </div>
+                        <div class="emergency-details">
+                            <div class="detail-item">
+                                <span class="detail-label">لوکیشن:</span>
+                                <span class="detail-value">ملتان، ایچ-9 بلاک</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">وقت:</span>
+                                <span class="detail-value">12:20</span>
+                            </div>
+                            <div class="detail-item">
+                                <span class="detail-label">اسٹیٹس:</span>
+                                <span class="detail-value">1 پولیس ٹیم</span>
+                            </div>
+                            <div class="detail-actions">
+                                <button class="action-btn primary">تفصیل دیکھیں</button>
+                                <button class="action-btn secondary">ایمرجنسی ختم کریں</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Emergency Map -->
+            <div class="emergency-map-section">
+                <h3>لائیو ایمرجنسی مپ</h3>
+                <div class="map-controls">
+                    <button class="map-filter-btn active" data-filter="all">تمام</button>
+                    <a href="medical.html" class="map-filter-btn">میڈیکل</a>
+                    <a href="fire.html" class="map-filter-btn">اگ</a>
+                    <a href="accident.html" class="map-filter-btn">حادثہ</a>
+                    <a href="police.html" class="map-filter-btn">پولیس</a>
+                </div>
+                <div id="emergencyMap" class="emergency-map">
+                    <!-- Real map will be rendered here -->
+                </div>
+                <div class="map-legend">
+                    <div class="legend-item">
+                        <span class="legend-icon medical">🏥</span>
+                        <span>میڈیکل</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon fire">🔥</span>
+                        <span>اگ</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon accident">🚗</span>
+                        <span>حادثہ</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-icon police">👮</span>
+                        <span>پولیس</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Response Actions -->
+            <div class="quick-response-section">
+                <h3>فوری رسپانز ایکشنز</h3>
+                <div class="response-actions-grid">
+                    <button class="response-action-btn">
+                        <span class="action-icon">🚑</span>
+                        <div class="action-content">
+                            <h4>ایمرجنسی ٹیم ڈسپاچ</h4>
+                            <p>تمام فعال ٹیموں کو ڈسپاچ کریں</p>
+                        </div>
+                    </button>
+                    <button class="response-action-btn">
+                        <span class="action-icon">📢</span>
+                        <div class="action-content">
+                            <h4>پبلک اناؤنس</h4>
+                            <p>علاقے میں ایمرجنسی اناؤنس جاری کریں</p>
+                        </div>
+                    </button>
+                    <button class="response-action-btn">
+                        <span class="action-icon">🏥</span>
+                        <div class="action-content">
+                            <h4>ہسپٹل کوآرڈینیٹ</h4>
+                            <p>نزدیکی ہسپٹلوں سے رابطہ کریں</p>
+                        </div>
+                    </button>
+                    <button class="response-action-btn">
+                        <span class="action-icon">👮</span>
+                        <div class="action-content">
+                            <h4>پولیس اسٹیشن کوآرڈینیٹ</h4>
+                            <p>قریبی پولیس اسٹیشنز کو الرٹ کریں</p>
+                        </div>
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>پُکار ایمرجنسی سسٹم</h4>
+                <p>پاکستان میں زبان کی رکاوٹیں توڑنے کے لیے</p>
+                <div class="footer-stats">
+                    <span>📊 آج کی رپورٹس: 79</span>
+                    <span>⚡ اوسط رسپانز ٹائم: 2.3 منٹ</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>اہم رابطے</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">🚨</span>
+                        <div>
+                            <strong>ایمرجنسی</strong>
+                            <span>1122</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🏥</span>
+                        <div>
+                            <strong>میڈیکل ہیلپ</strong>
+                            <span>0800-12345</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">👮</span>
+                        <div>
+                            <strong>پولیس ہیلپ لائن</strong>
+                            <span>0800-01534</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>سسٹم انفارمیشن</h4>
+                <div class="system-info">
+                    <span>ورژن: v2.1.0</span>
+                    <span>لاسٹ اپڈیٹ: 2025-02-20</span>
+                    <span>سرور: 🟢 آن لائن</span>
+                    <span>یوزرز: 1,247 فعال</span>
+                </div>
+                <div class="copyright">
+                    <p>© 2025 پُکار - آل رائٹس ریزرو</p>
+                    <p>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="emergency.js"></script>
+</body>
+</html>

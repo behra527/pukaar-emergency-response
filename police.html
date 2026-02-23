@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پولیس ایمرجنسی - پُکار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>پولیس ایمرجنسی</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">�</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">Police Emergency</span>
+                        <span class="pukaar-subtitle">پولیس ایمرجنسی سسٹم</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-btn">ڈیش بورڈ</a>
+                <a href="emergency.html" class="nav-btn">ایمرجنسی</a>
+                <a href="medical.html" class="nav-btn">میڈیکل</a>
+                <a href="fire.html" class="nav-btn">اگ</a>
+                <a href="accident.html" class="nav-btn">حادثہ</a>
+                <a href="police.html" class="nav-btn active">پولیس</a>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <a href="settings.html" class="nav-btn">سیٹنگز</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <a href="tel:1122" class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Police Emergency Hero -->
+        <section class="emergency-hero police-hero">
+            <div class="hero-content">
+                <div class="hero-icon">👮</div>
+                <h2>پولیس ایمرجنسی</h2>
+                <p>پاکستان بھر میں 24/7 پولیس اور سیکیورٹی سروسز</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">156</span>
+                        <span class="stat-label">پولیس اسٹیشنز</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">1.8</span>
+                        <span class="stat-label">منٹ اوسط رسپانز</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">8</span>
+                        <span class="stat-label">موجودہ کیسز</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Police Actions -->
+        <section class="quick-actions-panel">
+            <h2>فوری پولیس ایکشنز</h2>
+            <div class="action-grid">
+                <button class="action-btn police" onclick="reportCrime()">
+                    <div class="action-icon">🚨</div>
+                    <h3>جرم رپورٹ کریں</h3>
+                    <p>فوری جرم کی اطلاع دیں</p>
+                </button>
+                <button class="action-btn police" onclick="womenSafety()">
+                    <div class="action-icon">🛡️</div>
+                    <h3>خواتین کی سلامتی</h3>
+                    <p>خواتین ہیلپ لائن</p>
+                </button>
+                <button class="action-btn police" onclick="trafficComplaint()">
+                    <div class="action-icon">🚦</div>
+                    <h3>ٹرافک شکایت</h3>
+                    <p>ٹرافک کی شکایت</p>
+                </button>
+                <button class="action-btn police" onclick="missingPerson()">
+                    <div class="action-icon">🔍</div>
+                    <h3>لاپتہ شخص</h3>
+                    <p>لاپتہ شخص کی تلاش</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Active Police Cases -->
+        <section class="emergency-control-panel">
+            <div class="control-header">
+                <h2>فعال پولیس کیسز</h2>
+                <div class="system-status">
+                    <span class="status-badge security">8 ایکٹو کیسز</span>
+                    <span class="response-time">اوسط رسپانز: 1.8 منٹ</span>
+                </div>
+            </div>
+
+            <div class="emergencies-grid">
+                <div class="emergency-card high-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon police">👮</span>
+                        <div class="emergency-info">
+                            <h4>چوری کی اطلاع</h4>
+                            <span class="emergency-id">POL-2025-0008</span>
+                        </div>
+                        <span class="priority-badge high">ہائی</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">لاہور، ماڈل ٹاؤن</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">14:40</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">پولیس موقع پر</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card medium-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon police">👮</span>
+                        <div class="emergency-info">
+                            <h4>خواتین کی شکایت</h4>
+                            <span class="emergency-id">POL-2025-0007</span>
+                        </div>
+                        <span class="priority-badge medium">میڈیم</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">کراچی، گلشن</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">14:15</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">تحقیقات جاری</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card low-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon police">👮</span>
+                        <div class="emergency-info">
+                            <h4>ٹرافک وایلیشن</h4>
+                            <span class="emergency-id">POL-2025-0006</span>
+                        </div>
+                        <span class="priority-badge low">لو</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">اسلام آباد، بلیو ایریا</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">13:55</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">کارروائی ہوئی</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Police Map -->
+        <section class="emergency-map-section">
+            <h3>پولیس سروسز مپ</h3>
+            <div class="map-controls">
+                <button class="map-filter-btn active" data-filter="all">تمام</button>
+                <button class="map-filter-btn" data-filter="station">پولیس اسٹیشن</button>
+                <button class="map-filter-btn" data-filter="patrol">پیٹرول کار</button>
+                <button class="map-filter-btn" data-filter="checkpost">چیک پوسٹ</button>
+            </div>
+            <div id="policeMap" class="emergency-map">
+                <!-- Map will be rendered here -->
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-icon police">👮</span>
+                    <span>پولیس اسٹیشن</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon police">🚓</span>
+                    <span>پیٹرول</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon police">🚧</span>
+                    <span>چیک پوسٹ</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Safety Resources -->
+        <section class="resources-section">
+            <h2>سلامتی کے وسائل</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🛡️</div>
+                    <h4>خواتین ہیلپ لائن</h4>
+                    <p>خواتین کے لیے خصوصی ہیلپ لائن</p>
+                    <div class="resource-status available">24/7</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">👶</div>
+                    <h4>چائلڈ پروٹیکشن</h4>
+                    <p>بچوں کے تحفظ کے لیے سروسز</p>
+                    <div class="resource-status available">دستیاب</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🏠</div>
+                    <h4>گھریلو تشدد</h4>
+                    <p>گھریلو تشدد کی اطلاع دیں</p>
+                    <div class="resource-status available">رازداری</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🚨</div>
+                    <h4>ایمرجنسی الرٹ</h4>
+                    <p>فوری مدد کے لیے 15 پر کال کریں</p>
+                    <div class="resource-status available">24/7</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>پولیس ایمرجنسی</h4>
+                <p>پاکستان بھر میں فوری پولیس مدد</p>
+                <div class="footer-stats">
+                    <span>👮 آج کے کیسز: 8</span>
+                    <span>⚡ اوسط رسپانز ٹائم: 1.8 منٹ</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>ہیلپ لائنز</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">🚨</span>
+                        <div>
+                            <strong>پولیس ہیلپ</strong>
+                            <span>15</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🛡️</span>
+                        <div>
+                            <strong>خواتین ہیلپ</strong>
+                            <span>0800-78789</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">👶</span>
+                        <div>
+                            <strong>چائلڈ ہیلپ</strong>
+                            <span>1121</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>سسٹم انفارمیشن</h4>
+                <div class="system-info">
+                    <span>ورژن: v2.1.0</span>
+                    <span>لاسٹ اپڈیٹ: 2025-02-23</span>
+                    <span>سرور: 🟢 آن لائن</span>
+                    <span>156 پولیس اسٹیشنز فعال</span>
+                </div>
+                <div class="copyright">
+                    <p>© 2025 پُکار - آل رائٹس ریزرو</p>
+                    <p>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="police.js"></script>
+</body>
+</html>

@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>حادثہ ایمرجنسی - پُکار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>حادثہ ایمرجنسی</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">�</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">Accident Emergency</span>
+                        <span class="pukaar-subtitle">حادثہ ایمرجنسی سسٹم</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-btn">ڈیش بورڈ</a>
+                <a href="emergency.html" class="nav-btn">ایمرجنسی</a>
+                <a href="medical.html" class="nav-btn">میڈیکل</a>
+                <a href="fire.html" class="nav-btn">اگ</a>
+                <a href="accident.html" class="nav-btn active">حادثہ</a>
+                <a href="police.html" class="nav-btn">پولیس</a>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <a href="settings.html" class="nav-btn">سیٹنگز</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <a href="tel:1122" class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Accident Emergency Hero -->
+        <section class="emergency-hero accident-hero">
+            <div class="hero-content">
+                <div class="hero-icon">🚗</div>
+                <h2>روڈ حادثہ ایمرجنسی</h2>
+                <p>پاکستان بھر میں فوری حادثہ رسپانس سروسز</p>
+                <div class="hero-stats">
+                    <div class="hero-stat">
+                        <span class="stat-number">67</span>
+                        <span class="stat-label">فعال ریسکیو ٹیمیں</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">3.8</span>
+                        <span class="stat-label">منٹ اوسط رسپانز</span>
+                    </div>
+                    <div class="hero-stat">
+                        <span class="stat-number">15</span>
+                        <span class="stat-label">موجودہ حادثے</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Quick Accident Actions -->
+        <section class="quick-actions-panel">
+            <h2>فوری حادثہ ایکشنز</h2>
+            <div class="action-grid">
+                <button class="action-btn accident" onclick="reportAccident()">
+                    <div class="action-icon">📞</div>
+                    <h3>حادثہ رپورٹ کریں</h3>
+                    <p>فوری اطلاع دیں</p>
+                </button>
+                <button class="action-btn accident" onclick="requestTow()">
+                    <div class="action-icon">🚛</div>
+                    <h3>ٹو ٹرک بلائیں</h3>
+                    <p>گاڑی اٹھوانے کی سروس</p>
+                </button>
+                <button class="action-btn accident" onclick="findMechanic()">
+                    <div class="action-icon">🔧</div>
+                    <h3>میکینک تلاش کریں</h3>
+                    <p>نزدیکی میکینک</p>
+                </button>
+                <button class="action-btn accident" onclick="insuranceClaim()">
+                    <div class="action-icon">📋</div>
+                    <h3>انشورنس کلیم</h3>
+                    <p>انشورنس اطلاع</p>
+                </button>
+            </div>
+        </section>
+
+        <!-- Active Accidents -->
+        <section class="emergency-control-panel">
+            <div class="control-header">
+                <h2>فعال حادثے</h2>
+                <div class="system-status">
+                    <span class="status-badge info">15 ایکٹو حادثے</span>
+                    <span class="response-time">اوسط رسپانز: 3.8 منٹ</span>
+                </div>
+            </div>
+
+            <div class="emergencies-grid">
+                <div class="emergency-card high-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon accident">🚗</span>
+                        <div class="emergency-info">
+                            <h4>موٹر وے حادثہ</h4>
+                            <span class="emergency-id">ACC-2025-0015</span>
+                        </div>
+                        <span class="priority-badge high">ہائی</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">ایم-2 موٹر وے، 100km</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">14:35</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">ریسکیو ٹیم موقع پر</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card medium-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon accident">🚗</span>
+                        <div class="emergency-info">
+                            <h4>شہری حادثہ</h4>
+                            <span class="emergency-id">ACC-2025-0014</span>
+                        </div>
+                        <span class="priority-badge medium">میڈیم</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">کراچی، شاہراہ فیصل</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">14:10</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">ٹو ٹرک موقع پر</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="emergency-card low-priority">
+                    <div class="emergency-header">
+                        <span class="emergency-icon accident">🚗</span>
+                        <div class="emergency-info">
+                            <h4>معمولی ٹکر</h4>
+                            <span class="emergency-id">ACC-2025-0013</span>
+                        </div>
+                        <span class="priority-badge low">لو</span>
+                    </div>
+                    <div class="emergency-details">
+                        <div class="detail-item">
+                            <span class="detail-label">لوکیشن:</span>
+                            <span class="detail-value">لاہور، مال روڈ</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">وقت:</span>
+                            <span class="detail-value">13:50</span>
+                        </div>
+                        <div class="detail-item">
+                            <span class="detail-label">اسٹیٹس:</span>
+                            <span class="detail-value">میکینک بلایا گیا</span>
+                        </div>
+                        <div class="detail-actions">
+                            <button class="action-btn primary">تفصیل دیکھیں</button>
+                            <button class="action-btn secondary">مکمل</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Accident Map -->
+        <section class="emergency-map-section">
+            <h3>حادثہ سروسز مپ</h3>
+            <div class="map-controls">
+                <button class="map-filter-btn active" data-filter="all">تمام</button>
+                <button class="map-filter-btn" data-filter="active">فعال حادثے</button>
+                <button class="map-filter-btn" data-filter="rescue">ریسکیو سینٹر</button>
+                <button class="map-filter-btn" data-filter="tow">ٹو سروس</button>
+            </div>
+            <div id="accidentMap" class="emergency-map">
+                <!-- Map will be rendered here -->
+            </div>
+            <div class="map-legend">
+                <div class="legend-item">
+                    <span class="legend-icon accident">🚗</span>
+                    <span>فعال حادثہ</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon accident">🚛</span>
+                    <span>ٹو سروس</span>
+                </div>
+                <div class="legend-item">
+                    <span class="legend-icon accident">🔧</span>
+                    <span>میکینک</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Road Safety Tips -->
+        <section class="resources-section">
+            <h2>روڈ سیفٹی ٹپس</h2>
+            <div class="resources-grid">
+                <div class="resource-card">
+                    <div class="resource-icon">🚦</div>
+                    <h4>ٹرافک سگنلز</h4>
+                    <p>ٹرافک قوانین کی پابندی کریں</p>
+                    <div class="resource-status available">ہدایت</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🛣️</div>
+                    <h4>سیٹ بیلٹ</h4>
+                    <p>ہمیشہ سیٹ بیلٹ لگائیں</p>
+                    <div class="resource-status available">ضروری</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">📱</div>
+                    <h4>موبائل فون</h4>
+                    <p>گاڑی چلاتے وقت موبائل نہ استعمال کریں</p>
+                    <div class="resource-status available">پابندی</div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-icon">🚗</div>
+                    <h4>تیز رفتاری</h4>
+                    <p>حد رفتار سے تجاوز نہ کریں</p>
+                    <div class="resource-status available">ہدایت</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>حادثہ ایمرجنسی</h4>
+                <p>پاکستان بھر میں فوری حادثہ مدد</p>
+                <div class="footer-stats">
+                    <span>🚗 آج کے حادثے: 15</span>
+                    <span>⚡ اوسط رسپانز ٹائم: 3.8 منٹ</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>ہیلپ لائنز</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">🚗</span>
+                        <div>
+                            <strong>موٹر وے پولیس</strong>
+                            <span>130</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🚛</span>
+                        <div>
+                            <strong>ٹو سروس</strong>
+                            <span>0800-TOW</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🔧</span>
+                        <div>
+                            <strong>میکینک ہیلپ</strong>
+                            <span>0800-MECH</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>سسٹم انفارمیشن</h4>
+                <div class="system-info">
+                    <span>ورژن: v2.1.0</span>
+                    <span>لاسٹ اپڈیٹ: 2025-02-23</span>
+                    <span>سرور: 🟢 آن لائن</span>
+                    <span>67 ریسکیو ٹیمیں فعال</span>
+                </div>
+                <div class="copyright">
+                    <p>© 2025 پُکار - آل رائٹس ریزرو</p>
+                    <p>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="accident.js"></script>
+</body>
+</html>

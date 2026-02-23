@@ -1,0 +1,545 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پُکار - پاکستان ایمرجنسی ریسپانس سسٹم</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="audio-ai.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="translator.js"></script>
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>System Active</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">🚨</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">Pakistan Emergency Response</span>
+                        <span class="pukaar-subtitle">پاکستان ایمرجنسی ریسپانس سسٹم</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <button class="nav-btn active" data-section="dashboard">ڈیش بورڈ</button>
+                <a href="emergency.html" class="nav-btn">ایمرجنسی</a>
+                <a href="medical.html" class="nav-btn">🏥 میڈیکل</a>
+                <a href="fire.html" class="nav-btn">🔥 اگ</a>
+                <a href="accident.html" class="nav-btn">🚗 حادثہ</a>
+                <a href="police.html" class="nav-btn">👮 پولیس</a>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <a href="settings.html" class="nav-btn">سیٹنگز</a>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <button class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <!-- Dashboard Section -->
+        <section id="dashboard-section" class="content-section active">
+            <div class="dashboard-grid">
+                <!-- Emergency Stats -->
+                <div class="stat-card urgent">
+                    <div class="stat-header">
+                        <h3>فوری امراض</h3>
+                        <span class="stat-icon">🏥</span>
+                    </div>
+                    <div class="stat-value">24</div>
+                    <div class="stat-change positive">+12% آج</div>
+                    <div class="stat-detail">آج کی کل رپورٹس: 156</div>
+                </div>
+
+                <div class="stat-card warning">
+                    <div class="stat-header">
+                        <h3>اگ بجھاؤ</h3>
+                        <span class="stat-icon">🔥</span>
+                    </div>
+                    <div class="stat-value">8</div>
+                    <div class="stat-change negative">-5% آج</div>
+                    <div class="stat-detail">فعال ٹیمیں: 12</div>
+                </div>
+
+                <div class="stat-card info">
+                    <div class="stat-header">
+                        <h3>حادثات</h3>
+                        <span class="stat-icon">🚗</span>
+                    </div>
+                    <div class="stat-value">15</div>
+                    <div class="stat-change positive">+8% آج</div>
+                    <div class="stat-detail">اینٹر سٹیٹ ہسپٹل: 8</div>
+                </div>
+
+                <div class="stat-card security">
+                    <div class="stat-header">
+                        <h3>سیکیورٹی</h3>
+                        <span class="stat-icon">👮</span>
+                    </div>
+                    <div class="stat-value">32</div>
+                    <div class="stat-change positive">+18% آج</div>
+                    <div class="stat-detail">پٹرولنگ: 4 گھنٹے</div>
+                </div>
+            </div>
+
+            <!-- Live Map -->
+            <div class="map-panel">
+                <div class="panel-header">
+                    <h2>لائیو ایمرجنسی مپ</h2>
+                    <div class="map-controls">
+                        <button class="map-btn active">All</button>
+                        <button class="map-btn">Medical</button>
+                        <button class="map-btn">Fire</button>
+                        <button class="map-btn">Police</button>
+                    </div>
+                </div>
+                <div class="map-container">
+                    <div id="liveMap" class="live-map">
+                        <!-- Real map will be rendered here -->
+                    </div>
+                    <div class="map-overlay">
+                        <div class="map-legend">
+                            <div class="legend-item">
+                                <span class="legend-icon medical">🏥</span>
+                                <span>میڈیکل</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-icon fire">🔥</span>
+                                <span>اگ</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-icon accident">🚗</span>
+                                <span>حادثہ</span>
+                            </div>
+                            <div class="legend-item">
+                                <span class="legend-icon police">👮</span>
+                                <span>پولیس</span>
+                            </div>
+                        </div>
+                        <div class="map-stats-overlay">
+                            <div class="stat-overlay">
+                                <span class="stat-number" id="activeEmergencies">15</span>
+                                <span class="stat-label">ایکٹو</span>
+                            </div>
+                            <div class="stat-overlay">
+                                <span class="stat-number" id="responseTeams">8</span>
+                                <span class="stat-label">ٹیم</span>
+                            </div>
+                            <div class="stat-overlay">
+                                <span class="stat-number" id="avgResponse">2.3</span>
+                                <span class="stat-label">منٹ</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Quick Actions -->
+            <div class="quick-actions-panel">
+                <h2>فوری ایکشنز</h2>
+                <div class="action-grid">
+                    <a href="medical.html" class="action-btn medical">
+                        <div class="action-icon">🏥</div>
+                        <div class="action-text">
+                            <h3>میڈیکل امراض</h3>
+                            <p>فوری طبی مدد</p>
+                        </div>
+                    </a>
+
+                    <a href="fire.html" class="action-btn fire">
+                        <div class="action-icon">🔥</div>
+                        <div class="action-text">
+                            <h3>اگ بجھاؤ</h3>
+                            <p>فائر بریگیڈ</p>
+                        </div>
+                    </a>
+
+                    <a href="accident.html" class="action-btn accident">
+                        <div class="action-icon">🚗</div>
+                        <div class="action-text">
+                            <h3>حادثہ</h3>
+                            <p>روڈ حادثات</p>
+                        </div>
+                    </a>
+
+                    <a href="police.html" class="action-btn police">
+                        <div class="action-icon">👮</div>
+                        <div class="action-text">
+                            <h3>پولیس</h3>
+                            <p>سیکیورٹی امداد</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Audio Input Section -->
+            <div class="audio-input-panel">
+                <div class="panel-header">
+                    <h2>آڈیو رپورٹ</h2>
+                    <div class="panel-tabs">
+                        <button class="tab-btn active" data-tab="record">ریکارڈ</button>
+                        <button class="tab-btn" data-tab="upload">اپ لوڈ</button>
+                    </div>
+                </div>
+
+                <div class="tab-content active" id="record-tab">
+                    <div class="recording-interface">
+                        <div class="audio-waveform">
+                            <div class="wave-bars">
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                                <div class="bar"></div>
+                            </div>
+                        </div>
+                        
+                        <div class="recording-controls">
+                            <button id="recordBtn" class="record-btn">
+                                <div class="record-circle"></div>
+                                <span>ریکارڈنگ شروع کریں</span>
+                            </button>
+                            
+                            <div class="recording-info">
+                                <span id="recording-time">00:00</span>
+                                <span id="recording-status">تیار ہے</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-content" id="upload-tab">
+                    <div class="upload-interface">
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📁</div>
+                            <h3>آڈیو فائل اپ لوڈ کریں</h3>
+                            <p>MP3, WAV, M4A فائلیں قبول ہیں</p>
+                            <input type="file" id="audioFile" accept="audio/*" class="file-input">
+                            <button class="upload-btn">فائل منتخب کریں</button>
+                        </div>
+                        
+                        <div id="fileInfo" class="file-info hidden">
+                            <div class="file-details">
+                                <span class="file-name"></span>
+                                <span class="file-size"></span>
+                            </div>
+                            <button class="remove-file">حذف کریں</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Processing Section -->
+            <div class="processing-panel">
+                <div class="language-selector-panel">
+                    <label for="aiLanguageSelect">🌐 ریسپانس زبان:</label>
+                    <select id="aiLanguageSelect">
+                        <option value="urdu" selected>اردو (Urdu)</option>
+                        <option value="pashto">پشتو (Pashto)</option>
+                        <option value="sindhi">سندھی (Sindhi)</option>
+                        <option value="saraiki">سرائیکی (Saraiki)</option>
+                        <option value="english">English</option>
+                    </select>
+                </div>
+                
+                <button id="processBtn" class="process-btn" disabled>
+                    <span class="btn-icon">🤖</span>
+                    <span>Gemini AI پروسیس کریں</span>
+                </button>
+                
+                <div class="ai-features">
+                    <span class="ai-badge">🧠 Gemini AI Powered</span>
+                    <span class="ai-badge">🔊 Auto Play</span>
+                    <span class="ai-badge">🌍 Multi-Language</span>
+                </div>
+                
+                <div id="processingLoader" class="processing-loader hidden">
+                    <div class="loader-content">
+                        <div class="loader-spinner"></div>
+                        <h3>🤖 Gemini AI پروسیس ہو رہا ہے</h3>
+                        <p id="processingStatus">آڈیو transcribe ہو رہا ہے...</p>
+                        <div class="progress-bar">
+                            <div class="progress-fill"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Results Section -->
+        <section id="results-section" class="content-section hidden">
+            <div class="results-container">
+                <div class="result-header">
+                    <h2>تجزیہ نتائج</h2>
+                    <button class="new-report-btn">نیا رپورٹ</button>
+                </div>
+
+                <div class="result-cards">
+                    <div class="result-card">
+                        <div class="card-header">
+                            <h3>شناخت شدہ زبان</h3>
+                            <span class="card-icon">🌍</span>
+                        </div>
+                        <div class="card-content">
+                            <p id="detectedLanguage" class="result-text">-</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="card-header">
+                            <h3>لکھا ہوا متن</h3>
+                            <span class="card-icon">📝</span>
+                        </div>
+                        <div class="card-content">
+                            <p id="transcribedText" class="result-text">-</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card">
+                        <div class="card-header">
+                            <h3>ایمرجنسی ٹائپ</h3>
+                            <span class="card-icon">🚨</span>
+                        </div>
+                        <div class="card-content">
+                            <p id="emergencyType" class="result-text">-</p>
+                        </div>
+                    </div>
+
+                    <div class="result-card response-card">
+                        <div class="card-header">
+                            <h3>🤖 AI جواب</h3>
+                            <span class="card-icon">💬</span>
+                        </div>
+                        <div class="card-content">
+                            <p id="responseText" class="result-text">-</p>
+                            <div class="response-actions">
+                                <button id="playResponseBtn" class="play-btn">
+                                    <span>🔊</span>
+                                    <span>آواز سنیں</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    <!-- History Section -->
+        <section id="history-section" class="content-section">
+            <div class="history-container">
+                <h2>ایمرجنسی ہسٹری</h2>
+                <div class="history-list">
+                    <div class="history-item">
+                        <div class="history-time">2025-02-23 14:30</div>
+                        <div class="history-type">میڈیکل ایمرجنسی</div>
+                        <div class="history-status">مکمل</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-time">2025-02-23 13:15</div>
+                        <div class="history-type">اگ بجھاؤ</div>
+                        <div class="history-status">مکمل</div>
+                    </div>
+                    <div class="history-item">
+                        <div class="history-time">2025-02-23 11:45</div>
+                        <div class="history-type">حادثہ</div>
+                        <div class="history-status">مکمل</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="content-section">
+            <div class="settings-container">
+                <h2>سیٹنگز</h2>
+                <div class="settings-grid">
+                    <div class="setting-item">
+                        <label>ڈیفالٹ زبان</label>
+                        <select id="defaultLanguage">
+                            <option value="ur">اردو</option>
+                            <option value="ps">پشتو</option>
+                            <option value="sd">سندھی</option>
+                            <option value="sk">سرائیکی</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>آڈیو کوالٹی</label>
+                        <select>
+                            <option value="high">ہائی</option>
+                            <option value="medium">میڈیم</option>
+                            <option value="low">لو</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>نوٹیفیکیشنز</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="notifications" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                    <div class="setting-item">
+                        <label>آٹو پلے</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="autoPlay" checked>
+                            <span class="slider"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <!-- Brand Section -->
+            <div class="footer-brand-section">
+                <div class="footer-brand">
+                    <div class="footer-brand-icon">🚨</div>
+                    <div class="footer-brand-text">
+                        <h3>پُکار</h3>
+                        <p>پاکستان ایمرجنسی ریسپانس سسٹم</p>
+                    </div>
+                </div>
+                <p class="footer-description">پاکستان میں زبان کی رکاوٹیں توڑنے کے لیے AI پر مبنی ایمرجنسی سروس۔ ہر زبان میں فوری مدد دستیاب ہے۔</p>
+                <div class="footer-stats-modern">
+                    <div class="footer-stat-item">
+                        <span class="footer-stat-value">79</span>
+                        <span class="footer-stat-label">آج کی رپورٹس</span>
+                    </div>
+                    <div class="footer-stat-item">
+                        <span class="footer-stat-value">2.3m</span>
+                        <span class="footer-stat-label">اوسط رسپانز</span>
+                    </div>
+                </div>
+                <div class="footer-badge">🚨 پُکار سسٹم v2.1</div>
+            </div>
+
+            <!-- Quick Links -->
+            <div class="footer-section-modern">
+                <h4 class="footer-section-title">فوری لنکس</h4>
+                <div class="footer-links">
+                    <a href="medical.html" class="footer-link">میڈیکل ایمرجنسی</a>
+                    <a href="fire.html" class="footer-link">آگ بجھاؤ</a>
+                    <a href="accident.html" class="footer-link">حادثہ رپورٹ</a>
+                    <a href="police.html" class="footer-link">پولیس ہیلپ</a>
+                    <a href="history.html" class="footer-link">ہسٹری</a>
+                    <a href="settings.html" class="footer-link">سیٹنگز</a>
+                </div>
+            </div>
+
+            <!-- Emergency Contacts -->
+            <div class="footer-section-modern">
+                <h4 class="footer-section-title">ایمرجنسی رابطے</h4>
+                <div class="footer-contacts">
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon">🚨</div>
+                        <div class="footer-contact-info">
+                            <span class="footer-contact-label">ایمرجنسی</span>
+                            <span class="footer-contact-value">1122</span>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon">🏥</div>
+                        <div class="footer-contact-info">
+                            <span class="footer-contact-label">میڈیکل ہیلپ</span>
+                            <span class="footer-contact-value">0800-12345</span>
+                        </div>
+                    </div>
+                    <div class="footer-contact-item">
+                        <div class="footer-contact-icon">👮</div>
+                        <div class="footer-contact-info">
+                            <span class="footer-contact-label">پولیس ہیلپ</span>
+                            <span class="footer-contact-value">0800-01534</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- System Info -->
+            <div class="footer-section-modern">
+                <h4 class="footer-section-title">سسٹم انفارمیشن</h4>
+                <div class="footer-system-info">
+                    <div class="system-info-item">
+                        <span class="system-info-label">ورژن</span>
+                        <span class="system-info-value">v2.1.0</span>
+                    </div>
+                    <div class="system-info-item">
+                        <span class="system-info-label">اپڈیٹ</span>
+                        <span class="system-info-value">2025-02-20</span>
+                    </div>
+                    <div class="system-info-item">
+                        <span class="system-info-label">سرور</span>
+                        <span class="system-info-value"><span class="status-dot"></span>آن لائن</span>
+                    </div>
+                    <div class="system-info-item">
+                        <span class="system-info-label">یوزرز</span>
+                        <span class="system-info-value">1,247 فعال</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Bottom -->
+        <div class="footer-bottom">
+            <div class="footer-copyright">
+                <p>© 2025 <strong>پُکار</strong> - آل رائٹس ریزروڈ</p>
+            </div>
+            <div class="footer-certification">
+                <span>✅</span>
+                <span>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</span>
+            </div>
+        </div>
+    </footer>
+
+    <script src="gemini-ai.js"></script>
+    <script src="audio-ai.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

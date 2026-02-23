@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>سیٹنگز - پُکار</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-left">
+            <span class="status-indicator online"></span>
+            <span>سیٹنگز</span>
+            <span class="connection-status">📶 Connected</span>
+        </div>
+        <div class="status-right">
+            <span id="current-time">00:00:00</span>
+            <span id="current-date">2025-02-23</span>
+            <span class="weather-info">🌤️ 28°C Islamabad</span>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="header">
+        <div class="header-container">
+            <div class="logo-section">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <div class="pukaar-logo">
+                            <span class="logo-emblem">🚨</span>
+                            <span class="logo-ring"></span>
+                        </div>
+                    </div>
+                    <div class="logo-text">
+                        <h1 class="pukaar-title">پُکار</h1>
+                        <span class="pukaar-tagline">System Settings</span>
+                        <span class="pukaar-subtitle">سیٹنگز مینجمنٹ</span>
+                    </div>
+                </div>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="index.html" class="nav-btn">ڈیش بورڈ</a>
+                <a href="emergency.html" class="nav-btn">ایمرجنسی</a>
+                <a href="history.html" class="nav-btn">ہسٹری</a>
+                <button class="nav-btn active" data-section="settings">سیٹنگز</button>
+            </nav>
+
+            <div class="header-actions">
+                <div class="language-selector">
+                    <select id="languageSelect">
+                        <option value="ur">اردو</option>
+                        <option value="ps">پشتو</option>
+                        <option value="sd">سندھی</option>
+                        <option value="sk">سرائیکی</option>
+                    </select>
+                </div>
+                <a href="tel:1122" class="emergency-hotline">
+                    <span>📞</span>
+                    <span>1122</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="main-container">
+        <section class="settings-dashboard">
+            <div class="settings-header">
+                <h2>سسٹم سیٹنگز</h2>
+                <div class="settings-actions">
+                    <button class="btn btn-success save-btn" onclick="saveSettings()">
+                        <span>💾</span>
+                        <span>سیٹنگز محفوظ کریں</span>
+                    </button>
+                    <button class="btn btn-warning reset-btn" onclick="resetSettings()">
+                        <span>🔄</span>
+                        <span>ڈیفالٹس پر واپس</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="settings-grid">
+                <!-- General Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>عام سیٹنگز</h3>
+                        <span class="section-icon">🌍</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">ڈیفالٹ زبان</label>
+                            <select id="defaultLanguage" class="setting-input">
+                                <option value="ur">اردو</option>
+                                <option value="ps">پشتو</option>
+                                <option value="sd">سندھی</option>
+                                <option value="sk">سرائیکی</option>
+                            </select>
+                            <small class="setting-desc">سسٹم کی ڈیفالٹ زبان</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ٹائم زون</label>
+                            <select id="timezone" class="setting-input">
+                                <option value="PKT">پاکستان ٹائم (PKT)</option>
+                                <option value="UTC">UTC</option>
+                                <option value="IST">انڈین ٹائم (IST)</option>
+                            </select>
+                            <small class="setting-desc">سسٹم ٹائم سیٹنگ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ڈیٹ فارمیٹ</label>
+                            <select id="dateFormat" class="setting-input">
+                                <option value="DD/MM/YYYY">دن/مہینہ/سال</option>
+                                <option value="MM/DD/YYYY">مہینہ/دن/سال</option>
+                                <option value="YYYY-MM-DD">سال/مہینہ/دن</option>
+                            </select>
+                            <small class="setting-desc">ڈیٹ ڈسپلے فارمیٹ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">آٹو لینگویج</label>
+                            <select id="autoLanguage" class="setting-input">
+                                <option value="true">آٹو</option>
+                                <option value="false">دستی</option>
+                            </select>
+                            <small class="setting-desc">زبان خود بخود پہچاننا</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Emergency Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>ایمرجنسی سیٹنگز</h3>
+                        <span class="section-icon">🚨</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">ڈیفالٹ ایمرجنسی ٹائپ</label>
+                            <select id="defaultEmergencyType" class="setting-input">
+                                <option value="medical">میڈیکل</option>
+                                <option value="fire">اگ بجھاؤ</option>
+                                <option value="accident">حادثہ</option>
+                                <option value="police">پولیس</option>
+                            </select>
+                            <small class="setting-desc">فوری ایکشن کے لیے ڈیفالٹ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">رسپانز ٹائم آؤٹ</label>
+                            <input type="number" id="responseTimeout" class="setting-input" value="30" min="10" max="300">
+                            <small class="setting-desc">سیکنڈز میں رسپانز ٹائم</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ایمرجنسی آٹو اسائن</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="autoAssign" checked>
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">قریبی اسٹیشنوں کو خود بخش کریں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ایمرجنسی الرٹ</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="emergencyAlerts" checked>
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">نئی ایمرجنسیز کے لیے نوٹیفیکیشنز</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Audio Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>آڈیو سیٹنگز</h3>
+                        <span class="section-icon">🎤</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">آڈیو کوالٹی</label>
+                            <select id="audioQuality" class="setting-input">
+                                <option value="high">ہائی</option>
+                                <option value="medium">میڈیم</option>
+                                <option value="low">لو</option>
+                            </select>
+                            <small class="setting-desc">ریکارڈنگ کوالٹی</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">آڈیو فارمیٹ</label>
+                            <select id="audioFormat" class="setting-input">
+                                <option value="wav">WAV</option>
+                                <option value="mp3">MP3</option>
+                                <option value="m4a">M4A</option>
+                            </select>
+                            <small class="setting-desc">آڈیو سیو فارمیٹ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">آڈیو آٹو پلے</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="autoPlay" checked>
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">آڈیو خود بخش پلے کریں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">آڈیو والیوم</label>
+                            <input type="range" id="audioVolume" class="setting-range" min="0" max="100" value="80">
+                            <span class="volume-value">80%</span>
+                            <small class="setting-desc">آڈیو والیوم کنٹرول</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notification Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>نوٹیفیکیشن سیٹنگز</h3>
+                        <span class="section-icon">🔔</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">ڈیسک ٹاپ نوٹیفیکیشنز</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="desktopNotifications" checked>
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">ڈیسک ٹاپ نوٹیفیکیشنز دکھائیں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ساؤنڈ نوٹیفیکیشنز</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="soundNotifications" checked>
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">ساؤنڈ پلے کریں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ایمیل نوٹیفیکیشنز</label>
+                            <input type="email" id="emailNotifications" class="setting-input" placeholder="your@email.com">
+                            <small class="setting-desc">ایمیل پتہ برائیں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">نوٹیفیکشن فریکوئنسی</label>
+                            <select id="notificationFrequency" class="setting-input">
+                                <option value="realtime">ریل ٹائم</option>
+                                <option value="hourly">ہر گھنٹہ</option>
+                                <option value="daily">ہر روز</option>
+                                <option value="weekly">ہر ہفتہ</option>
+                            </select>
+                            <small class="setting-desc">نوٹیفیکشنز کی فریکوئنسی</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Security Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>سیکیورٹی سیٹنگز</h3>
+                        <span class="section-icon">🔒</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">لاگ ان ٹائم آؤٹ</label>
+                            <select id="autoLogout" class="setting-input">
+                                <option value="never">کبھی نہیں</option>
+                                <option value="15">15 منٹ</option>
+                                <option value="30">30 منٹ</option>
+                                <option value="60">1 گھنٹا</option>
+                                <option value="120">2 گھنٹے</option>
+                            </select>
+                            <small class="setting-desc">نا فعال استعمال کے بعد لاگ آؤٹ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">سیشن ٹائم آؤٹ</label>
+                            <input type="number" id="sessionTimeout" class="setting-input" value="60" min="15" max="480">
+                            <small class="setting-desc">منٹوں میں سیشن ٹائم آؤٹ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">ٹو فیکٹر آٹھینٹیکیشن</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="twoFactorAuth">
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">ٹو فیکٹر آٹھینٹیکیشن چالو</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">IP پتہ ریسٹرکشن</label>
+                            <div class="toggle-switch">
+                                <input type="checkbox" id="ipRestriction">
+                                <span class="slider"></span>
+                            </div>
+                            <small class="setting-desc">مخصوصی IP پتوں تک رسائی محدود کریں</small>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- System Settings -->
+                <div class="settings-section">
+                    <div class="section-header">
+                        <h3>سسٹم سیٹنگز</h3>
+                        <span class="section-icon">💻</span>
+                    </div>
+                    <div class="settings-list">
+                        <div class="setting-item">
+                            <label class="setting-label">ڈیٹا بیس بیک اپ</label>
+                            <select id="backupFrequency" class="setting-input">
+                                <option value="daily">ہر روز</option>
+                                <option value="weekly">ہر ہفتہ</option>
+                                <option value="monthly">ہر مہینہ</option>
+                                <option value="manual">دستی</option>
+                            </select>
+                            <small class="setting-desc">آٹومیٹک ڈیٹا بیس بیک اپ</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">لاگ لیول</label>
+                            <select id="logLevel" class="setting-input">
+                                <option value="error">صرف غلطیاں</option>
+                                <option value="warning">غلطیاں اور تنبیہات</option>
+                                <option value="info">تمام لاگز</option>
+                                <option value="debug">ڈیبگ لاگز</option>
+                            </select>
+                            <small class="setting-desc">سسٹم لاگنگ لیول</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">کیش کلئیر انٹرول</label>
+                            <button class="clear-cache-btn">کیش کلئیر کریں</button>
+                            <small class="setting-desc">براؤزر کیش اور ٹیمپورری فائلیں صاف کریں</small>
+                        </div>
+
+                        <div class="setting-item">
+                            <label class="setting-label">سسٹم ری سیٹ</label>
+                            <button class="reset-system-btn">سسٹم ری سیٹ کریں</button>
+                            <small class="setting-desc">سسٹم کو ڈیفالٹ سیٹنگز پر واپس لے جائیں</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>پُکار ایمرجنسی سسٹم</h4>
+                <p>پاکستان میں زبان کی رکاوٹیں توڑنے کے لیے</p>
+                <div class="footer-stats">
+                    <span>📊 آج کی رپورٹس: 79</span>
+                    <span>⚡ اوسط رسپانز ٹائم: 2.3 منٹ</span>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>اہم رابطے</h4>
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <span class="contact-icon">🚨</span>
+                        <div>
+                            <strong>ایمرجنسی</strong>
+                            <span>1122</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">🏥</span>
+                        <div>
+                            <strong>میڈیکل ہیلپ</strong>
+                            <span>0800-12345</span>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <span class="contact-icon">👮</span>
+                        <div>
+                            <strong>پولیس ہیلپ لائن</strong>
+                            <span>0800-01534</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h4>سسٹم انفارمیشن</h4>
+                <div class="system-info">
+                    <span>ورژن: v2.1.0</span>
+                    <span>لاسٹ اپڈیٹ: 2025-02-20</span>
+                    <span>سرور: 🟢 آن لائن</span>
+                    <span>یوزرز: 1,247 فعال</span>
+                </div>
+                <div class="copyright">
+                    <p>© 2025 پُکار - آل رائٹس ریزرو</p>
+                    <p>پاکستان حکومت سرٹیفائیڈ ایمرجنسی سسٹم</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="settings.js"></script>
+</body>
+</html>

@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ur">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>پُکار - Emergency Response System</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="logo">
+                <h1>پُکار</h1>
+                <p>Emergency Response System</p>
+            </div>
+            <div class="language-selector">
+                <select id="languageSelect">
+                    <option value="ur">اردو</option>
+                    <option value="ps">پشتو</option>
+                    <option value="sd">سندھی</option>
+                    <option value="sk">سرائیکی</option>
+                </select>
+            </div>
+        </header>
+
+        <main class="main-content">
+            <div class="emergency-banner">
+                <div class="emergency-icon">🚨</div>
+                <h2 id="emergencyTitle">Emergency Assistance</h2>
+                <p id="emergencySubtitle">Speak in your language, we understand</p>
+            </div>
+
+            <div class="audio-section">
+                <div class="recording-area">
+                    <div class="mic-container">
+                        <button id="recordBtn" class="record-btn">
+                            <span class="mic-icon">🎤</span>
+                            <span id="recordText">Tap to Record</span>
+                        </button>
+                        <div id="recordingIndicator" class="recording-indicator hidden">
+                            <div class="pulse"></div>
+                            <span>Recording...</span>
+                        </div>
+                    </div>
+                    
+                    <div class="upload-area">
+                        <input type="file" id="audioFile" accept="audio/*" class="file-input">
+                        <label for="audioFile" class="upload-btn">
+                            <span>📁</span>
+                            <span>Upload Audio</span>
+                        </label>
+                    </div>
+                </div>
+
+                <div id="audioPlayer" class="audio-player hidden">
+                    <audio id="audioElement" controls></audio>
+                    <p id="audioFileName"></p>
+                </div>
+            </div>
+
+            <div class="processing-section">
+                <div class="process-btn-container">
+                    <button id="processBtn" class="process-btn disabled" disabled>
+                        <span>🔄</span>
+                        <span>Process Audio</span>
+                    </button>
+                </div>
+                
+                <div id="processingStatus" class="processing-status hidden">
+                    <div class="spinner"></div>
+                    <p>Processing your emergency request...</p>
+                </div>
+            </div>
+
+            <div id="resultsSection" class="results-section hidden">
+                <div class="result-card">
+                    <h3>Detected Language</h3>
+                    <p id="detectedLanguage" class="result-text"></p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Transcribed Text</h3>
+                    <p id="transcribedText" class="result-text"></p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Emergency Type</h3>
+                    <p id="emergencyType" class="result-text"></p>
+                </div>
+                
+                <div class="result-card">
+                    <h3>Response</h3>
+                    <p id="responseText" class="result-text"></p>
+                    <button id="playResponseBtn" class="play-btn">
+                        <span>🔊</span>
+                        <span>Play Response</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="quick-actions">
+                <h3>Quick Emergency Contacts</h3>
+                <div class="emergency-contacts">
+                    <button class="contact-btn" data-emergency="medical">
+                        <span>🏥</span>
+                        <span>Medical</span>
+                    </button>
+                    <button class="contact-btn" data-emergency="fire">
+                        <span>🔥</span>
+                        <span>Fire</span>
+                    </button>
+                    <button class="contact-btn" data-emergency="accident">
+                        <span>🚗</span>
+                        <span>Accident</span>
+                    </button>
+                    <button class="contact-btn" data-emergency="theft">
+                        <span>👮</span>
+                        <span>Theft</span>
+                    </button>
+                </div>
+            </div>
+        </main>
+
+        <footer class="footer">
+            <p>پُکار - Breaking Language Barriers in Emergency Situations</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
